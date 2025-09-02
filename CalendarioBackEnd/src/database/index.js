@@ -6,11 +6,12 @@ var connection = null;
 module.exports.database = (collection) =>
   new promise(async (resolve, reject) => {
     try {
-      const client = new MongoClient(config.mongouri);
-      if (connection) {
+      if (!connection) {
+        const client = new MongoClient(config.mongouri);
         connection = await client.connect();
         debug("Conectado a la base de datos");
       }
+      debug("Usando la base de datos existente");
       const db = connection.db(config.mongodb);
       resolve(db.collection(collection));
     } catch (error) {

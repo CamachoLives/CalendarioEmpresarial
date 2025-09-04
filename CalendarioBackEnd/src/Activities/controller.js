@@ -3,4 +3,3 @@ module.exports.activitiesController = {
   getactivityById: (req, res) => {},
   createactivity: (req, res) => {},
 };
-// HIIII

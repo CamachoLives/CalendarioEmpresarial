@@ -4,7 +4,7 @@ const { config } = require("../config/index");
 
 var connection = null;
 module.exports.database = (collection) =>
-  new promise(async (resolve, reject) => {
+  new Promise(async (resolve, reject) => {
     try {
       if (!connection) {
         const client = new MongoClient(config.mongouri);

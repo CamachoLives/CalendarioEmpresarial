@@ -11,6 +11,7 @@
   "license": "ISC",
   "type": "commonjs",
   "dependencies": {
+    "cors": "^2.8.5",
     "debug": "^4.4.1",
     "dotenv": "^17.2.1",
     "excel4node": "^1.8.2",

@@ -3,11 +3,12 @@
 const express = require("express");
 const debug = require("debug")("app:main");
 const { activities } = require("./src/Activities/index");
+const cors = require('cors');
 
 // initializing variables
 const app = express();
 const { config } = require("./src/config/index");
-
+app.use(cors());
 app.use(express.json());
 
 // module imports

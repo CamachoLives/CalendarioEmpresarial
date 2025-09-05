@@ -1,11 +1,11 @@
 const express = require("express");
-const { Auth } = require("./controller");
+const { Authcontroller } = require("./controller");
 const router = express.Router();
 
-module.exports.Authentication = (app) => {
+module.exports.Auth = (app) => {
   router
-    .post("/login", Auth.Login) 
-    .post("/register", Auth.createactivity); 
+    .post("/login", Authcontroller.Login)
+    .post("/register", Authcontroller.Register);
 
   app.use("/api/Auth", router);
 };

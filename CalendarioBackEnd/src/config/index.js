@@ -1,9 +1,9 @@
 require("dotenv").config();
 
 module.exports.config = {
-  DB_HOST: localhost,
+  DB_HOST: "localhost",
   DB_PORT: 5432,
-  DB_USER: postgres,
-  DB_PASSWORD: 12345678,
-  DB_NAME: CalendarioRestrictivo,
+  DB_USER: "postgres",
+  DB_PASSWORD: "12345678",
+  DB_NAME: "CalendarioRestrictivo",
 };

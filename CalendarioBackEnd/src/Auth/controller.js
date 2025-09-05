@@ -3,20 +3,20 @@ const { AuthServices } = require("./services");
 const { response } = require("../common/response");
 
 module.exports.Authcontroller = {
-  login: async (req, res) => {
+  Login: async (req, res) => {
     try {
       const { email, password } = req.body;
-      const result = await AuthServices.login(email, password);
+      const result = await AuthServices.Login(email, password);
       res.json(result);
     } catch (error) {
       debug(error);
       response.error(res);
     }
   },
-  register: async (req, res) => {
+  Register: async (req, res) => {
     try {
       const { email, password } = req.body;
-      const result = await AuthServices.register(email, password);
+      const result = await AuthServices.Register(email, password);
       res.status(201).json(result);
     } catch (error) {
       debug(error);

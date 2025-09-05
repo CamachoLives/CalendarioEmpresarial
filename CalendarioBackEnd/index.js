@@ -9,7 +9,7 @@ const app = express();
 // here we will import all the modules
 const { Auth } = require("./src/Auth/index");
 const { activities } = require("./src/Activities/index");
-const { config } = require("./src/config/index");
+// const { config } = require("./src/config/index");
 
 // initializing variables
 app.use(cors());
@@ -19,6 +19,6 @@ app.use(express.json());
 activities(app);
 Auth(app);
 
-app.listen(config.DB_PORT, () => {
-  debug(`Server is running on:${config.DB_PORT}`);
+app.listen(process.env.PORT, () => {
+  debug(`Server is running on:${process.env.PORT}`);
 });

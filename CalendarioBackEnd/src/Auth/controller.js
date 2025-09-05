@@ -17,7 +17,7 @@ module.exports.Authcontroller = {
     try {
       const { email, password } = req.body;
       const result = await AuthServices.Register(email, password);
-      res.status(201).json(result);
+      response.success(res, result.message, 201, result.user);
     } catch (error) {
       debug(error);
       response.error(res);

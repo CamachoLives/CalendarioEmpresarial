@@ -1,7 +1,7 @@
 // src/config/db.js
 const { Pool } = require("pg");
 const debug = require("debug")("app:database");
-const { config } = require("../config/index");
+const config = require("../config/index");
 
 let pool = null;
 

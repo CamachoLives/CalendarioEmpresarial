@@ -17,12 +17,13 @@ const Login = async (email, password) => {
   return { message: "Login exitoso", token };
 };
 
-const Register = async (email, password) => {
+const Register = async (nombre, email, password) => {
   const exists = await authRepository.findByEmail(email);
-  if (exists) throw new Error("El usuario ya existe");
+  if (exists) throw new Error("The email is already in use");
 
   const hashedPassword = await bcrypt.hash(password, 10);
   const newUser = await authRepository.create({
+    nombre,
     email,
     password: hashedPassword,
   });

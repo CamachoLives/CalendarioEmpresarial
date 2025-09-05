@@ -21,8 +21,8 @@ const create = (user) => {
   return new Promise(async (resolve, reject) => {
     try {
       const result = await db.query(
-        "INSERT INTO usuarios (email, password_hash) VALUES ($1, $2) RETURNING *",
-        [user.email, user.password]
+        "INSERT INTO usuarios (nombre, email, password_hash) VALUES ($1, $2, $3) RETURNING *",
+        [user.nombre, user.email, user.password]
       );
       resolve(result.rows[0]);
     } catch (error) {

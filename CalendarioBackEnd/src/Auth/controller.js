@@ -15,8 +15,8 @@ module.exports.Authcontroller = {
   },
   Register: async (req, res) => {
     try {
-      const { email, password } = req.body;
-      const result = await AuthServices.Register(email, password);
+      const { nombre, email, password } = req.body;
+      const result = await AuthServices.Register(nombre, email, password);
       response.success(res, result.message, 201, result.user);
     } catch (error) {
       debug(error);

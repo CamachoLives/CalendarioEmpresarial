@@ -1,21 +1,42 @@
-const { MongoClient } = require("mongodb");
+// src/config/db.js
+const { Pool } = require("pg");
 const debug = require("debug")("app:database");
 const { config } = require("../config/index");
 
-var connection = null;
-module.exports.database = (collection) =>
-  new Promise(async (resolve, reject) => {
+let pool = null;
+
+const connectDB = () => {
+  return new Promise((resolve, reject) => {
     try {
-      if (!connection) {
-        const client = new MongoClient(config.mongouri);
-        connection = await client.connect();
-        debug("Conectado a la base de datos");
+      if (!pool) {
+        pool = new Pool({
+          host: config.dbHost,
+          port: config.dbPort,
+          user: config.dbUser,
+          password: config.dbPassword,
+          database: config.dbName,
+        });
+
+        pool.on("connect", () => debug("✅ Conectado a PostgreSQL"));
+        pool.on("error", (err) => reject(err));
       }
-      debug("Usando la base de datos existente");
-      const db = connection.db(config.mongodb);
-      resolve(db.collection(collection));
+      resolve(pool);
     } catch (error) {
-      debug(error);
       reject(error);
     }
   });
+};
+
+const query = (text, params) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      const client = await connectDB();
+      const result = await client.query(text, params);
+      resolve(result);
+    } catch (error) {
+      reject(error);
+    }
+  });
+};
+
+module.exports = { query, connectDB };

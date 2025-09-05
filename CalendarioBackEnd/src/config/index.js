@@ -1,7 +1,9 @@
 require("dotenv").config();
 
 module.exports.config = {
-  port: process.env.PORT || 7000,
-  mongouri: process.env.MONGO_URI,
-  mongodb: process.env.MONGODB,
+  DB_HOST: localhost,
+  DB_PORT: 5432,
+  DB_USER: postgres,
+  DB_PASSWORD: 12345678,
+  DB_NAME: CalendarioRestrictivo,
 };

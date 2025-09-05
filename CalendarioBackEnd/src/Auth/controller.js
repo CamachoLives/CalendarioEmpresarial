@@ -7,7 +7,7 @@ module.exports.Authcontroller = {
     try {
       const { email, password } = req.body;
       const result = await AuthServices.Login(email, password);
-      res.json(result);
+      response.success(res, result.message, 202, result.user);
     } catch (error) {
       debug(error);
       response.error(res);

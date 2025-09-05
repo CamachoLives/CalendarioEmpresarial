@@ -5,16 +5,20 @@ const { JWT_SECRET } = process.env;
 
 const Login = async (email, password) => {
   const user = await authRepository.findByEmail(email);
-  if (!user) throw new Error("Usuario no encontrado");
+  console.log("USER:", user);
 
-  const match = await bcrypt.compare(password, user.password);
-  if (!match) throw new Error("Contraseña incorrecta");
+  if (!user) throw new Error("Email not found");
+  if (!user.password_hash) {
+    throw new Error("El usuario no tiene contraseña registrada");
+  }
+  const match = await bcrypt.compare(password, user.password_hash);
+  if (!match) throw new Error("Password is incorrect");
 
   const token = jwt.sign({ id: user.id, email: user.email }, JWT_SECRET, {
     expiresIn: "1h",
   });
 
-  return { message: "Login exitoso", token };
+  return { message: "Login Success", token };
 };
 
 const Register = async (nombre, email, password) => {

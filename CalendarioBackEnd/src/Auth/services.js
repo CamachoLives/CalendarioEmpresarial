@@ -17,8 +17,8 @@ const Login = async (email, password) => {
   const token = jwt.sign({ id: user.id, email: user.email }, JWT_SECRET, {
     expiresIn: "1h",
   });
-
-  return { message: "Login Success", token };
+  console.log("token --> ", token);
+  return { message: "Login Success", token: token };
 };
 
 const Register = async (nombre, email, password) => {

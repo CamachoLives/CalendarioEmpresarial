@@ -13,6 +13,7 @@ module.exports.Authcontroller = {
       response.error(res);
     }
   },
+  //
   Register: async (req, res) => {
     try {
       const { nombre, email, password } = req.body;

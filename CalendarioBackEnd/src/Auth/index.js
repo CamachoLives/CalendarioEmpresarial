@@ -1,10 +1,24 @@
-const express = require("express");
-const { Authcontroller } = require("./controller");
+const express = require('express');
+const { AuthController } = require('./controller');
+const { authSchemas, validateRequest } = require('../middleware/validation');
+const { authRateLimit, authenticateToken } = require('../middleware/security');
 const router = express.Router();
-module.exports.Auth = (app) => {
-  router
-    .post("/login", Authcontroller.Login)
-    .post("/register", Authcontroller.Register);
 
-  app.use("/api/Auth", router);
+module.exports.Auth = app => {
+  router
+    .post(
+      '/login',
+      authRateLimit,
+      validateRequest(authSchemas.login),
+      AuthController.Login,
+    )
+    .post(
+      '/register',
+      authRateLimit,
+      validateRequest(authSchemas.register),
+      AuthController.Register,
+    )
+    .get('/verify', authenticateToken, AuthController.VerifyToken);
+
+  app.use('/api/auth', router);
 };

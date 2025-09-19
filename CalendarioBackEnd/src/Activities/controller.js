@@ -1,39 +1,105 @@
-const debug = require("debug")("app:activities-controller");
-const { activitiesService } = require("./services");
-const { response } = require("../common/response");
-const createErrors = require("http-errors");
+// const debug = require('debug')('app:activities-controller');
+const { activitiesService } = require('./services');
+const { response } = require('../common/response');
+const { createError } = require('../middleware/errorHandler');
 
 module.exports.activitiesController = {
-  getactivities: async (req, res) => {
+  getAllActivities: async (req, res, next) => {
     try {
-      console.log("Entre");
-      let activities = await activitiesService.Getall();
-      response.success(res, "We will get the activities!", 200, activities);
+      const activities = await activitiesService.getAll();
+      response.success(
+        res,
+        'Actividades obtenidas exitosamente',
+        200,
+        activities
+      );
     } catch (error) {
-      debug(error);
-      response.error(res);
+      next(error);
     }
   },
-  getactivityById: async (req, res) => {
+
+  getActivityById: async (req, res, next) => {
     try {
-      let id = await activitiesService.getById(req.id);
+      const { id } = req.params;
+
       if (!id) {
-        response.error(res, new createErrors.NotFound());
-      } else {
-        response.success(res, "Activities by ID!", 200, id);
+        throw createError('ID de actividad requerido', 400);
       }
+
+      const activity = await activitiesService.getById(id);
+
+      if (!activity) {
+        throw createError('Actividad no encontrada', 404);
+      }
+
+      response.success(res, 'Actividad obtenida exitosamente', 200, activity);
     } catch (error) {
-      debug(error);
-      response.error(res);
+      next(error);
     }
   },
-  createactivity: async (req, res) => {
+
+  createActivity: async (req, res, next) => {
     try {
-      let Create = await activitiesService.create(req.body);
-      response.success(res, "Create Activitie!", 200, req.body);
+      const activityData = req.body;
+
+      if (!activityData || Object.keys(activityData).length === 0) {
+        throw createError('Datos de actividad requeridos', 400);
+      }
+
+      const newActivity = await activitiesService.create(activityData);
+      response.success(res, 'Actividad creada exitosamente', 201, newActivity);
     } catch (error) {
-      debug(error);
-      response.error(res);
+      next(error);
+    }
+  },
+
+  updateActivity: async (req, res, next) => {
+    try {
+      const { id } = req.params;
+      const updateData = req.body;
+
+      if (!id) {
+        throw createError('ID de actividad requerido', 400);
+      }
+
+      if (!updateData || Object.keys(updateData).length === 0) {
+        throw createError('Datos de actualización requeridos', 400);
+      }
+
+      const updatedActivity = await activitiesService.update(id, updateData);
+
+      if (!updatedActivity) {
+        throw createError('Actividad no encontrada', 404);
+      }
+
+      response.success(
+        res,
+        'Actividad actualizada exitosamente',
+        200,
+        updatedActivity
+      );
+    } catch (error) {
+      next(error);
+    }
+  },
+
+  deleteActivity: async (req, res, next) => {
+    try {
+      const { id } = req.params;
+
+      if (!id) {
+        throw createError('ID de actividad requerido', 400);
+      }
+
+      const deleted = await activitiesService.delete(id);
+
+      if (!deleted) {
+        throw createError('Actividad no encontrada', 404);
+      }
+
+      response.success(res, 'Actividad eliminada exitosamente', 200);
+    } catch (error) {
+      next(error);
     }
   },
 };

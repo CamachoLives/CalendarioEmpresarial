@@ -1,12 +1,18 @@
-const express = require("express");
-const { activitiesController } = require("./controller");
+const express = require('express');
+const { activitiesController } = require('./controller');
+const { authenticateToken } = require('../middleware/security');
 const router = express.Router();
 
-module.exports.activities = (app) => {
-  router
-    .get("", activitiesController.getactivities) // http://localhost:7000/api/activities
-    .get("/id", activitiesController.getactivityById) // http://localhost:7000/api/activities/66
-    .post("", activitiesController.createactivity); // http://localhost:7000/api/activities
+module.exports.activities = app => {
+  // Rutas públicas (si las hay)
 
-  app.use("/api/activities", router);
+  // Rutas protegidas
+  router
+    .get('/', activitiesController.getAllActivities)
+    .get('/:id', activitiesController.getActivityById)
+    .post('/', authenticateToken, activitiesController.createActivity)
+    .put('/:id', authenticateToken, activitiesController.updateActivity)
+    .delete('/:id', authenticateToken, activitiesController.deleteActivity);
+
+  app.use('/api/activities', router);
 };

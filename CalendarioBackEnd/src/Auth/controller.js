@@ -1,26 +1,69 @@
-const debug = require("debug")("app:module-auth-controller");
-const { AuthServices } = require("./services");
-const { response } = require("../common/response");
+const debug = require('debug')('app:module-auth-controller');
+const { AuthServices } = require('./services');
+const { response } = require('../common/response');
+const { createError } = require('../middleware/errorHandler');
 
-module.exports.Authcontroller = {
-  Login: async (req, res) => {
+module.exports.AuthController = {
+  Login: async (req, res, next) => {
     try {
       const { email, password } = req.body;
+
+      // Validación adicional de entrada
+      if (!email || !password) {
+        throw createError('Email y contraseña son requeridos', 400);
+      }
+
       const result = await AuthServices.Login(email, password);
-      response.success(res, result.message, 202, result.token);
+
+      // No logear el token en producción
+      if (process.env.NODE_ENV !== 'production') {
+        debug('Login successful for user:', email);
+      }
+
+      response.success(res, result.message, 200, { token: result.token });
     } catch (error) {
-      debug(error);
-      response.error(res);
+      next(error);
     }
   },
-  Register: async (req, res) => {
+
+  Register: async (req, res, next) => {
     try {
       const { nombre, email, password } = req.body;
+
+      // Validación adicional de entrada
+      if (!nombre || !email || !password) {
+        throw createError('Todos los campos son requeridos', 400);
+      }
+
       const result = await AuthServices.Register(nombre, email, password);
-      response.success(res, result.message, 201, result.user);
+
+      // No logear información sensible
+      debug('User registered successfully:', { email, nombre });
+
+      response.success(res, result.message, 201, {
+        user: {
+          id: result.user.id,
+          nombre: result.user.nombre,
+          email: result.user.email,
+        },
+      });
     } catch (error) {
-      debug(error);
-      response.error(res);
+      next(error);
+    }
+  },
+
+  // Nuevo endpoint para verificar token
+  VerifyToken: async (req, res, next) => {
+    try {
+      // Si llegamos aquí, el token es válido (verificado por middleware)
+      response.success(res, 'Token válido', 200, {
+        user: {
+          id: req.user.id,
+          email: req.user.email,
+        },
+      });
+    } catch (error) {
+      next(error);
     }
   },
 };

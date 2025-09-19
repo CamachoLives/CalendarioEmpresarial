@@ -8,7 +8,7 @@ module.exports.AuthController = {
     try {
       const { email, password } = req.body;
 
-      // Validación adicional de entrada
+      // Validación adicional de entradaa
       if (!email || !password) {
         throw createError('Email y contraseña son requeridos', 400);
       }

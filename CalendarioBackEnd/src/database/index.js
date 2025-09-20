@@ -47,23 +47,25 @@ const connectDB = () => {
   });
 };
 
-const query = (text, params) => {
-  return new Promise(async (resolve, reject) => {
-    let client;
-    try {
-      client = await connectDB();
-      const start = Date.now();
-      const result = await client.query(text, params);
-      const duration = Date.now() - start;
+const query = async (text, params) => {
+  let client;
+  try {
+    client = await connectDB();
+    const start = Date.now();
+    const result = await client.query(text, params);
+    const duration = Date.now() - start;
 
-      debug(`Query executed in ${duration}ms:`, { text, params });
+    debug(`Query executed in ${duration}ms:`, { text, params });
 
-      resolve(result);
-    } catch (error) {
-      debug('Query error:', { text, params, error: error.message });
-      reject(error);
+    return result;
+  } catch (error) {
+    debug('Query error:', { text, params, error: error.message });
+    throw error;
+  } finally {
+    if (client) {
+      client.release();
     }
-  });
+  }
 };
 
 // Función para cerrar todas las conexiones (útil para testing)

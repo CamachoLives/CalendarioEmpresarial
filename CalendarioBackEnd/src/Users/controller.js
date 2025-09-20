@@ -1,4 +1,4 @@
-const debug = require('debug')('app:users-controller');
+// const debug = require('debug')('app:users-controller');
 const { usersService } = require('./services');
 const { response } = require('../common/response');
 const { createError } = require('../middleware/errorHandler');

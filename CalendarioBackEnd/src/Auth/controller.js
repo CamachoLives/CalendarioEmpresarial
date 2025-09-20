@@ -5,6 +5,7 @@ const { createError } = require('../middleware/errorHandler');
 
 module.exports.AuthController = {
   Login: async (req, res, next) => {
+    console.log('Entrando a login con:', req.body);
     try {
       const { email, password } = req.body;
 
@@ -53,7 +54,7 @@ module.exports.AuthController = {
   },
 
   // Nuevo endpoint para verificar token
-  VerifyToken: async (req, res, next) => {
+  VerifyToken: (req, res, next) => {
     try {
       // Si llegamos aquí, el token es válido (verificado por middleware)
       response.success(res, 'Token válido', 200, {

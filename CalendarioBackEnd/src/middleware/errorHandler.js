@@ -79,7 +79,7 @@ const errorHandler = (err, req, res, next) => {
 };
 
 // Middleware para rutas no encontradas
-const notFound = (req, res, next) => {
+const notFound = (req, _res, next) => {
   const error = new AppError(`Ruta no encontrada: ${req.originalUrl}`, 404);
   next(error);
 };

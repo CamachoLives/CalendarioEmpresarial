@@ -21,14 +21,14 @@ const createRateLimit = (windowMs, max, message) => {
 const authRateLimit = createRateLimit(
   15 * 60 * 1000, // 15 minutos
   5, // máximo 5 intentos
-  'Demasiados intentos de login, intenta en 15 minutos',
+  'Demasiados intentos de login, intenta en 15 minutos'
 );
 
 // Rate limit general
 const generalRateLimit = createRateLimit(
   15 * 60 * 1000, // 15 minutos
   100, // máximo 100 requests
-  'Demasiadas solicitudes, intenta más tarde',
+  'Demasiadas solicitudes, intenta más tarde'
 );
 
 // Middleware de autenticación JWT
@@ -86,10 +86,10 @@ const sanitizeLogs = (req, res, next) => {
 const helmetConfig = helmet({
   contentSecurityPolicy: {
     directives: {
-      defaultSrc: ['\'self\''],
-      styleSrc: ['\'self\'', '\'unsafe-inline\''],
-      scriptSrc: ['\'self\''],
-      imgSrc: ['\'self\'', 'data:', 'https:'],
+      defaultSrc: ["'self'"],
+      styleSrc: ["'self'", "'unsafe-inline'"],
+      scriptSrc: ["'self'"],
+      imgSrc: ["'self'", 'data:', 'https:'],
     },
   },
   crossOriginEmbedderPolicy: false,

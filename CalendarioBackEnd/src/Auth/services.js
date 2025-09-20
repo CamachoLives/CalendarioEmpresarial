@@ -37,7 +37,7 @@ const Login = async (email, password) => {
         expiresIn: JWT_EXPIRES_IN || '1h',
         issuer: 'calendario-app',
         audience: 'calendario-users',
-      },
+      }
     );
 
     debug('Login successful for user:', user.email);
@@ -91,7 +91,7 @@ const Register = async (nombre, email, password) => {
 const verifyToken = token => {
   try {
     return jwt.verify(token, JWT_SECRET);
-  } catch (error) {
+  } catch {
     throw createError('Token inválido', 401);
   }
 };

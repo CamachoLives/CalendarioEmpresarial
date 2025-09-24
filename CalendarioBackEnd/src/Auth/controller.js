@@ -23,7 +23,7 @@ module.exports.AuthController = {
 
       response.success(res, result.message, 200, { token: result.token });
     } catch (error) {
-      next(error);
+      next('Siguiente error --> ', error);
     }
   },
 

@@ -20,7 +20,7 @@ const createRateLimit = (windowMs, max, message) => {
 // Rate limit para autenticación (más restrictivo)
 const authRateLimit = createRateLimit(
   15 * 60 * 1000, // 15 minutos
-  5, // máximo 5 intentos
+  15, // máximo 15 intentos
   'Demasiados intentos de login, intenta en 15 minutos'
 );
 

@@ -48,9 +48,10 @@ const connectDB = () => {
 };
 
 const query = async (text, params) => {
-  let client;
+  const pool = await connectDB();
+  const client = await pool.connect(); // aquí sí es un cliente válido
+
   try {
-    client = await connectDB();
     const start = Date.now();
     const result = await client.query(text, params);
     const duration = Date.now() - start;
@@ -62,9 +63,7 @@ const query = async (text, params) => {
     debug('Query error:', { text, params, error: error.message });
     throw error;
   } finally {
-    if (client) {
-      client.release();
-    }
+    client.release();
   }
 };
 

@@ -5,7 +5,6 @@ const { createError } = require('../middleware/errorHandler');
 
 module.exports.AuthController = {
   Login: async (req, res, next) => {
-    console.log('Entrando a login con:', req.body);
     try {
       const { email, password } = req.body;
 

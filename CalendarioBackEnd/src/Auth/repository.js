@@ -8,7 +8,6 @@ const findByEmail = async email => {
     const result = await db.query('SELECT * FROM usuarios WHERE email = $1', [
       email,
     ]);
-    console.log('result --> ', result.rows[0]);
     return result.rows[0] || null;
   } catch (error) {
     debug('Error buscando usuario por email:', error);

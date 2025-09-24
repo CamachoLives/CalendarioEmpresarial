@@ -45,6 +45,7 @@ const Login = async (email, password) => {
     return {
       message: 'Inicio de sesión exitoso',
       token: token,
+      id: user.id,
     };
   } catch (error) {
     debug('Login error:', error.message);

@@ -20,7 +20,10 @@ module.exports.AuthController = {
         debug('Login successful for user:', email);
       }
 
-      response.success(res, result.message, 200, { token: result.token });
+      response.success(res, result.message, 200, {
+        token: result.token,
+        id: result.id,
+      });
     } catch (error) {
       next('Siguiente error --> ', error);
     }

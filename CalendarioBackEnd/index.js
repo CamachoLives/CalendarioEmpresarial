@@ -51,7 +51,7 @@ app.get('/health', (req, res) => {
 // module imports
 //activities(app);
 Auth(app);
-//Users(app);
+Users(app);
 //Profile(app);
 
 // Error handling middleware (debe ir al final)

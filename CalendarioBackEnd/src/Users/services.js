@@ -1,4 +1,4 @@
-const { usersRepository } = require('./repository');
+const { UsersRepository } = require('./repository');
 const { createError } = require('../middleware/errorHandler');
 const debug = require('debug')('app:users-service');
 
@@ -6,7 +6,7 @@ const getAllUsers = async (options = {}) => {
   try {
     const { email, page = 1, limit = 10 } = options;
 
-    const users = await usersRepository.getAllUsers({
+    const users = await UsersRepository.getAllUsers({
       email,
       page: parseInt(page),
       limit: parseInt(limit),
@@ -26,12 +26,12 @@ const getUserById = async id => {
       throw createError('ID de usuario requerido', 400);
     }
 
-    const user = await usersRepository.getUserById(id);
+    const user = await UsersRepository.getUserById(id);
 
     if (!user) {
       return null;
     }
-
+    console.log('id --> ', id);
     debug(`Retrieved user with ID: ${id}`);
     return user;
   } catch (error) {
@@ -53,7 +53,7 @@ const updateUser = async (id, updateData) => {
       throw createError('Datos de actualización requeridos', 400);
     }
 
-    const updatedUser = await usersRepository.updateUser(id, {
+    const updatedUser = await UsersRepository.updateUser(id, {
       ...updateData,
       updatedAt: new Date(),
     });
@@ -79,7 +79,7 @@ const deleteUser = async id => {
       throw createError('ID de usuario requerido', 400);
     }
 
-    const deleted = await usersRepository.deleteUser(id);
+    const deleted = await UsersRepository.deleteUser(id);
 
     if (!deleted) {
       return false;

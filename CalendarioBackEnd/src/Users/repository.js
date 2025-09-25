@@ -14,6 +14,18 @@ const getEverything = async email => {
   }
 };
 
+const getUserById = async id => {
+  try {
+    const result = await db.query('SELECT * FROM usuarios WHERE id = $1', [id]);
+
+    return result.rows[0] || null;
+  } catch (error) {
+    console.error('❌ Error en getUserById (repository):', error);
+    throw error;
+  }
+};
+
 module.exports.UsersRepository = {
   getEverything,
+  getUserById,
 };

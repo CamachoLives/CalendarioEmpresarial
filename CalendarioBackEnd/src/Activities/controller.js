@@ -17,7 +17,7 @@ module.exports.activitiesController = {
       next(error);
     }
   },
-
+//
   getActivityById: async (req, res, next) => {
     try {
       const { id } = req.params;

@@ -31,7 +31,6 @@ const getUserById = async id => {
     if (!user) {
       return null;
     }
-    console.log('id --> ', id);
     debug(`Retrieved user with ID: ${id}`);
     return user;
   } catch (error) {

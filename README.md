@@ -1,4 +1,4 @@
-#Intra#
+  INTRA
 
 plataforma interna para la gestión de reuniones, actividades semanales, recordatorios y manejo de los clientes. Control de accesos por roles y parametrización dinámica. Implementación de WebSockets para la comunicación que es bidireccional en tiempo real, tambien el consumo de APIs REST mediante Fetch y arquitecturas basadas en microservicios para alta disponibilidad y escalabilidad. Tecnologías: Node.js, Angular, WebSockets, Fetch API, APIs REST, PostgreSQL, HTML5, CSS3, microservicios.
 

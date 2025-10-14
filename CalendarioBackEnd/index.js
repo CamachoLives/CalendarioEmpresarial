@@ -1,11 +1,10 @@
-// this is the main entry point of the application
-// importing necessary packages
 const express = require('express');
-const cors = require('cors');
+const cors    = require('cors');
 require('dotenv').config();
 
 const debug = require('debug')('app:main');
-const app = express();
+const app   = express();
+
 // Security and middleware imports
 const {
   generalRateLimit,
@@ -14,15 +13,14 @@ const {
 } = require('./src/middleware/security');
 const { errorHandler, notFound } = require('./src/middleware/errorHandler');
 
-// here we will import all the modules
-const { Auth } = require('./src/Auth/');
-const { activities } = require('./src/Activities/index');
-const { Users } = require('./src/Users/index');
-const { Profile } = require('./src/Profile/index');
+// Modules
+const { Auth }        = require('./src/Auth/');
+const { activities }  = require('./src/Activities/index');
+const { Users }       = require('./src/Users/index');
+const { Profile }     = require('./src/Profile/index');
+const listEndpoints   = require('express-list-endpoints');
 
-const listEndpoints = require('express-list-endpoints');
-
-// Security middleware (debe ir primero)
+// Security middleware
 app.use(helmetConfig);
 app.use(generalRateLimit);
 app.use(sanitizeLogs);
@@ -48,13 +46,13 @@ app.get('/health', (req, res) => {
   });
 });
 
-// module imports
-//activities(app);
+// Apps
 Auth(app);
 Users(app);
+//activities(app);
 //Profile(app);
 
-// Error handling middleware (debe ir al final)
+// Error handling middleware
 app.use(notFound);
 app.use(errorHandler);
 

@@ -1,9 +1,8 @@
-// src/database/index.js
-const { Pool } = require('pg');
-const debug = require('debug')('app:database');
-const config = require('../config/index');
 
-let pool = null;
+const { Pool }  = require('pg');
+const debug     = require('debug')('app:database');
+const config    = require('../config/index');
+let pool        = null;
 
 const connectDB = () => {
   return new Promise((resolve, reject) => {
@@ -15,9 +14,9 @@ const connectDB = () => {
           user: config.dbUser,
           password: config.dbPassword,
           database: config.dbName,
-          // Configuraciones adicionales de seguridad
+          // SSL Seguridad
           ssl: config.isProduction ? { rejectUnauthorized: false } : false,
-          max: 20, // máximo de conexiones en el pool
+          max: 20, // Máximo de conexiones
           idleTimeoutMillis: 30000, // cerrar conexiones inactivas después de 30s
           connectionTimeoutMillis: 2000, // timeout de conexión de 2s
         });
@@ -49,7 +48,7 @@ const connectDB = () => {
 
 const query = async (text, params) => {
   const pool = await connectDB();
-  const client = await pool.connect(); // aquí sí es un cliente válido
+  const client = await pool.connect(); 
 
   try {
     const start = Date.now();

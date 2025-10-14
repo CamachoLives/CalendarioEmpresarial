@@ -6,7 +6,7 @@ const config = {
   dbPort: parseInt(process.env.DB_PORT, 10) || 5432,
   dbUser: process.env.DB_USER || 'postgres',
   dbPassword: process.env.DB_PASSWORD || 'password',
-  dbName: process.env.DB_NAME || 'calendario_db',
+  dbName: process.env.DB_NAME || 'calendar',
 
   // JWT Configuration
   jwtSecret:

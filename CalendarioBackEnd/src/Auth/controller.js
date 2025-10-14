@@ -7,12 +7,10 @@ module.exports.AuthController = {
   Login: async (req, res, next) => {
     try {
       const { email, password } = req.body;
-
       // Validación adicional de entradaa
       if (!email || !password) {
         throw createError('Email y contraseña son requeridos', 400);
       }
-
       const result = await AuthServices.Login(email, password);
 
       // No logear el token en producción

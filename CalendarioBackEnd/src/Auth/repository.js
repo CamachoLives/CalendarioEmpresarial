@@ -4,10 +4,12 @@ const debug = require('debug')('app:user-repository');
 // const { response } = require('../common/response');
 
 const findByEmail = async email => {
+  console.log(email)
   try {
     const result = await db.query('SELECT * FROM usuarios WHERE email = $1', [
       email,
     ]);
+
     return result.rows[0] || null;
   } catch (error) {
     debug('Error buscando usuario por email:', error);

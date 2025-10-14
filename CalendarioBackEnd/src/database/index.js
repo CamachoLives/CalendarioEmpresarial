@@ -56,7 +56,6 @@ const query = async (text, params) => {
     const duration = Date.now() - start;
 
     debug(`Query executed in ${duration}ms:`, { text, params });
-
     return result;
   } catch (error) {
     debug('Query error:', { text, params, error: error.message });

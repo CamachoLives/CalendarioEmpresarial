@@ -10,6 +10,7 @@ const Login = async (email, password) => {
   try {
     // Buscar usuario por email
     const user = await authRepository.findByEmail(email);
+    console.log("Pass has --> ", user.password);
 
     if (!user) {
       throw createError('Credenciales inválidas', 401);
@@ -18,7 +19,7 @@ const Login = async (email, password) => {
     if (!user.password_hash) {
       throw createError('El usuario no tiene contraseña registrada', 400);
     }
-
+    
     // Verificar contraseña
     const match = await bcrypt.compare(password, user.password_hash);
     if (!match) {

@@ -10,13 +10,11 @@ const updateParametrizacionPlataforma = async (id, updateData) => {
     if (!updateData || Object.keys(updateData).length === 0) {
       throw createError('Datos de actualización requeridos', 400);
     }
-
     const updateParametrizacionPlataforma =
       await configuracionRepository.updateParametrizacionPlataforma(
         id,
         updateData
       );
-
     if (!updateParametrizacionPlataforma) {
       return null;
     }

@@ -1,12 +1,10 @@
 // src/modules/users/user.repository.js
 const db = require('../database/index');
-const debug = require('debug')('app:configuracion-repository');
 
 const updateParametrizacionPlataforma = async (id, json) => {
-  console.log('JSON EN REPO --> ', json);
-  console.log('ID --> ', id);
-
   try {
+    console.log('Iniciando actualización...');
+
     const query = `
       UPDATE parametros
       SET
@@ -22,7 +20,6 @@ const updateParametrizacionPlataforma = async (id, json) => {
       WHERE id = $10
       RETURNING *;
     `;
-
     const values = [
       json.logo || null,
       json.color || null,
@@ -36,15 +33,17 @@ const updateParametrizacionPlataforma = async (id, json) => {
       id,
     ];
 
+    console.log('Ejecutando query...');
     const result = await db.query(query, values);
-
-    return result.rows[0] || null;
+    console.log('Query ejecutada correctamente');
+    console.log('Resultado:', result.rows[0]);
+    return result.rows[0];
   } catch (error) {
     console.error('Error actualizando parametrización:', error);
     throw error;
   }
 };
 
-module.exports.authRepository = {
+module.exports.configuracionRepository = {
   updateParametrizacionPlataforma,
 };

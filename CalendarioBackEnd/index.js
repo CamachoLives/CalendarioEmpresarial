@@ -1,9 +1,9 @@
 const express = require('express');
-const cors    = require('cors');
+const cors = require('cors');
 require('dotenv').config();
 
 const debug = require('debug')('app:main');
-const app   = express();
+const app = express();
 
 // Security and middleware imports
 const {
@@ -14,11 +14,12 @@ const {
 const { errorHandler, notFound } = require('./src/middleware/errorHandler');
 
 // Modules
-const { Auth }        = require('./src/Auth/');
-const { activities }  = require('./src/Activities/index');
-const { Users }       = require('./src/Users/index');
-const { Profile }     = require('./src/Profile/index');
-const listEndpoints   = require('express-list-endpoints');
+const { configuracion } = require('./src/configuracion/');
+const { Auth } = require('./src/Auth/');
+const { activities } = require('./src/Activities/index');
+const { Users } = require('./src/Users/index');
+const { Profile } = require('./src/Profile/index');
+const listEndpoints = require('express-list-endpoints');
 
 // Security middleware
 app.use(helmetConfig);
@@ -49,6 +50,7 @@ app.get('/health', (req, res) => {
 // Apps
 Auth(app);
 Users(app);
+configuracion(app);
 //activities(app);
 //Profile(app);
 

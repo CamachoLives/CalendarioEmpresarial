@@ -6,7 +6,7 @@ const router = express.Router();
 module.exports.configuracion = app => {
   router.put(
     '/:id',
-    authenticateToken,
+    // authenticateToken,
     configuracionController.updateParametrizacionPlataforma
   );
 

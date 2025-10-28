@@ -5,7 +5,10 @@ const { response } = require('../common/response');
 
 module.exports.configuracionController = {
   updateParametrizacionPlataforma: async (req, res, next) => {
+    console.log('--- LLEGÓ A CONTROLLER CONFIGURACION ---');
     try {
+      console.log('REQ.PARAMS.ID --> ', req.params.id);
+      console.log('REQ.BODY --> ', req.body);
       const { id } = req.params;
       const updateData = req.body;
       if (!id) {

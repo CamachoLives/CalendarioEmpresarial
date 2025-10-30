@@ -44,6 +44,11 @@ const updateParametrizacionPlataforma = async (id, json) => {
   }
 };
 
+const getParametrizacionPlataforma = async(id) => {
+  
+}
+
 module.exports.configuracionRepository = {
   updateParametrizacionPlataforma,
+  getParametrizacionPlataforma
 };

@@ -5,10 +5,8 @@ const { response } = require('../common/response');
 
 module.exports.configuracionController = {
   updateParametrizacionPlataforma: async (req, res, next) => {
-    console.log('--- LLEGÓ A CONTROLLER CONFIGURACION ---');
     try {
-      console.log('REQ.PARAMS.ID --> ', req.params.id);
-      console.log('REQ.BODY --> ', req.body);
+     
       const { id } = req.params;
       const updateData = req.body;
       if (!id) {
@@ -38,4 +36,25 @@ module.exports.configuracionController = {
       next(error);
     }
   },
+
+  getParametrizacionPlataforma: async (req, res, next) => {
+    console.log("Estoy adentro");
+
+    try {
+
+      const { id } = req.params;
+
+      if (!id) {
+        throw createError('ID del formulario requerido', 400);
+      }
+
+      const Parametrizacion = await configuracionService.getParametrizacionPlataforma(id);
+      response.success(res, 'Formulario obtenido exitosamente', 200, Parametrizacion);
+
+    } catch (error) {
+      next(error);
+
+    }
+
+  }
 };

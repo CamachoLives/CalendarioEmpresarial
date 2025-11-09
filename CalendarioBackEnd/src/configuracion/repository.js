@@ -3,7 +3,6 @@ const db = require('../database/index');
 
 const updateParametrizacionPlataforma = async (id, json) => {
   try {
-    console.log('Iniciando actualización...');
 
     const query = `
       UPDATE parametros
@@ -33,10 +32,7 @@ const updateParametrizacionPlataforma = async (id, json) => {
       id,
     ];
 
-    console.log('Ejecutando query...');
     const result = await db.query(query, values);
-    console.log('Query ejecutada correctamente');
-    console.log('Resultado:', result.rows[0]);
     return result.rows[0];
   } catch (error) {
     console.error('Error actualizando parametrización:', error);
@@ -44,6 +40,28 @@ const updateParametrizacionPlataforma = async (id, json) => {
   }
 };
 
+const getParametrizacionPlataforma = async(id) => {
+  try {
+    const query = `
+      GET parametros
+      SET
+        logo = $1,
+      WHERE id = $10
+      RETURNING *;
+    `;
+    const values = {
+      id,
+    }
+    const result = await db.query(query, values);
+    return result.rows[0];
+    }
+ catch (error) {
+    throw new Error("No se pudo ejecutar bien la query..!", error);
+    
+  }}
+
+
 module.exports.configuracionRepository = {
   updateParametrizacionPlataforma,
+  getParametrizacionPlataforma
 };
